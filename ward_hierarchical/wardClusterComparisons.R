@@ -66,12 +66,12 @@ hcDendro <- as.dendrogram(hc)
 dend_h <- heights_per_k.dendrogram(hcDendro)
 
 # plot of just 10 cluster leaves (issue with poor group labeling)
-pdf("hierarchicalDendroCut.pdf", width = 20, height = 10)
+pdf("hierarchicalDendroCut.png", width = 20, height = 10)
 plot(cut(hcDendro, h = dend_h[10])$upper, main = 'Upper Tree (k = 10)')
 dev.off()
 
 # plot dendrogram colored by Seurat designated cell type
-pdf("hierarchicalDendro.pdf", width = 40, height = 15)
+pdf("hierarchicalDendro.png", width = 40, height = 20)
 myplclust(hc, labels = markers$clusterDesig, lab.col = as.numeric(markers$cluster), cex = 0.5)
 abline(h = dend_h[10], col = 'red')
 dev.off()
@@ -84,8 +84,8 @@ hclusters <- cutree(hc, k = 10)
 
 #First lets stash our identities for later
 seuratO <- StashIdent(seuratO, save.name = "SeuratCluster")
-seuratO@data.info <- seuratO@data.info %>%
-  mutate(SeuratCluster = as.numeric(seuratO@data.info$SeuratCluster) + 1)
+seuratO@meta.data <- seuratO@meta.data %>%
+  mutate(SeuratCluster = as.numeric(seuratO@meta.data$SeuratCluster) + 1)
 
 # Alternatively, we can also cluster the cells using Infomap
 # Add cluster IDs to Seurat object
@@ -99,14 +99,14 @@ Jaccard_Index <- function(v1, v2) {
 
 # Empty matrix
 jiM <- matrix(NA
-              , length(unique(seuratO@data.info$SeuratCluster))
-              , length(unique(seuratO@data.info$WardCluster)))
+              , length(unique(seuratO@meta.data$SeuratCluster))
+              , length(unique(seuratO@meta.data$WardCluster)))
 
 # Fill with Jaccard index
-for (i in 1:length(unique(seuratO@data.info$SeuratCluster))){
-  for (j in 1:length(unique(seuratO@data.info$WardCluster))){
-    v1 <- row.names(seuratO@data.info)[seuratO@data.info$SeuratCluster == i]
-    v2 <- row.names(seuratO@data.info)[seuratO@data.info$WardCluster == j]
+for (i in 1:length(unique(seuratO@meta.data$SeuratCluster))){
+  for (j in 1:length(unique(seuratO@meta.data$WardCluster))){
+    v1 <- row.names(seuratO@meta.data)[seuratO@meta.data$SeuratCluster == i]
+    v2 <- row.names(seuratO@meta.data)[seuratO@meta.data$WardCluster == j]
     jiM[i,j] <- Jaccard_Index(v1, v2)
   }
 }
