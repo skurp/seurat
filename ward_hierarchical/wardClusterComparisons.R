@@ -4,7 +4,7 @@
 
 # Must load modules:
 #  module load gcc/4.9.3
-#  module load R/3.3.0
+#  module load R/3.4.0
 ################################################################################
 
 rm(list = ls())
@@ -23,9 +23,7 @@ library(dendextend)
 
 ################################################################################
 # load Seurat object
-load("/u/project/eeskin/geschwind/dpolioud/RNAseq_singlecellfetal/analysis/Seurat_Cluster_DS2-11/Seurat_Cluster_DS2-11_FtMm250_200-3sdgd_Mt5_RegNumiLibBrain_PC1to40_seuratO.Robj")
-seuratO <- centSO
-rm(centSO)
+load("../../analysis/OFFICIAL/Cluster_Seurat_exon_FtMm250_fetb_seurat_Seurat2_update.Robj")
 
 # prepare cluster values and designations
 Map_Values <- function (values, from, to) {
@@ -50,7 +48,7 @@ newIDs <- c(
   , "Endothelial")
 
 markers <- data.frame(cluster = as.numeric(seuratO@meta.data$res.0.6))
-#markers$clusterDesig <- as.factor(Map_Values(markers$cluster, currentIDs, newIDs))
+markers$clusterDesig <- as.factor(Map_Values(markers$cluster, currentIDs, newIDs))
 
 ################################################################################
 
@@ -99,19 +97,6 @@ Jaccard_Index <- function(v1, v2) {
   sum(v1 %in% v2) / (length(v1) + length(v2) - sum(v1 %in% v2))
 }
 
-# Seurat clusters
-newIDs <- c(
-  "Excitatory Upper Layer Neuron 1"
-  , "Excitatory Neuron"
-  , "Excitatory Upper Layer Neuron 2"
-  , "Excitatory Deep Layer Neuron"
-  , "Intermediate Progenitors"
-  , "Interneuron"
-  , "Mitotic Progenitors"
-  , "oRG"
-  , "Oligodendrocyte Precursor"
-  , "Endothelial")
-
 # Empty matrix
 jiM <- matrix(NA
               , length(unique(seuratO@data.info$SeuratCluster))
@@ -152,8 +137,4 @@ ggplot(jiM_melt, aes(Seurat, variable)) +
   ylab(label = "Hierarchical Ward") +
   ggtitle('Clustering Method Comparison', subtitle = paste0("Jaccard Indices between ", "6075", " cells"))
 dev.off()
-
-
-
-
 
