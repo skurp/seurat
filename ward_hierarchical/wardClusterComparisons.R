@@ -47,6 +47,7 @@ newIDs <- c(
   , "Oligodendrocyte Precursor"
   , "Endothelial")
 
+seurat@meta.data$SeuratCluster <- Map_Values(seuratO@meta.data$res.0.6, currentIDs, newIDs)
 ################################################################################
 # Heatmap dendrogram ------------------------------------------------------
 library(RColorBrewer)
@@ -55,7 +56,7 @@ hmcol <- colorRampPalette(brewer.pal(n.cluster, "GnBu"))(20)
 
 library(gplots)
 # colorize the cells based on their cluster designations
-cols <- colorRampPalette(brewer.pal(n.cluster, "Spectral"))(n.cluster)
+cols <- colorRampPalette(brewer.pal(n.cluster, "Paired"))(n.cluster)
 head(cbind(colnames(seuratO@data),cols))
 print('number cells:')
 print(length(cols))
@@ -83,10 +84,11 @@ pdf("heatmapDendro_AllVarGenes.pdf", width = 30, height = 15, units = "in")
 heatmap.2(rv, 
           distfun = dist,
           hclustfun = hclust,
-          dendrogram = c('column'),
+          dendrogram = c('both'),
           Rowv = FALSE,
           Colv = Colv,
-          labCol=as.numeric(seuratO@meta.data$res.0.6),
+          labCol=seurat@meta.data$SeuratCluster,
+          strCol=90,
           trace="none", 
           ColSideColors=seuratO@meta.data$cols, 
           col=hmcol,
