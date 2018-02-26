@@ -68,8 +68,6 @@ seuratO@meta.data$cols <- Map_Values(seuratO@meta.data$res.0.6, currentIDs, newI
 library(genefilter)
 print(paste('Number of variable genes: ', length(seuratO@var.genes)))
 rv <- as.matrix(seuratO@data[seuratO@var.genes,])
-print('number variable genes:')
-print(ncol(rv))
 # rv <- rowVars(as.matrix(seuratO@data))
 # idx <- order(-rv)[1:1000]
 # prepare integer vector of values cut at number of Seurat clusters
@@ -101,7 +99,7 @@ print("Finished display")
 
 
 # tSNE Color Ward ---------------------------------------------------------
-plot2 <- TSNEPlot(seuratO, do.label = TRUE, group.by = "WardCluster", pt.size = 0.2, do.return = TRUE
+plot2 <- TSNEPlot(seuratO, do.label = TRUE, group.by = "WardCluster", pt.size = 0.4, do.return = TRUE
                   , no.legend = TRUE)
 plot2 <- plot2 + ggtitle(paste0("tSNE plot, each point is a cell"
                                 , "\nColor indicates cluster assignment"
