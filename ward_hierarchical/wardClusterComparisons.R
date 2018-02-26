@@ -51,14 +51,14 @@ newIDs <- c(
 # Heatmap dendrogram ------------------------------------------------------
 library(RColorBrewer)
 n.cluster <- length(unique(seuratO@meta.data$res.0.6))
-hmcol <- colorRampPalette(brewer.pal(n.cluster, "GnBu"))(50)
+hmcol <- colorRampPalette(brewer.pal(n.cluster, "GnBu"))(20)
 
 library(gplots)
 # colorize the cells based on their cluster designations
 cols <- colorRampPalette(brewer.pal(n.cluster, "Spectral"))(n.cluster)
 head(cbind(colnames(seuratO@data),cols))
-print('length cols:')
-length(cols)
+print('number cells:')
+print(length(cols))
 # map color values to each cell
 currentIDs <- unique(seuratO@meta.data$res.0.6)
 newIDs <- cols
@@ -68,8 +68,8 @@ seuratO@meta.data$cols <- Map_Values(seuratO@meta.data$res.0.6, currentIDs, newI
 library(genefilter)
 print(paste('Number of variable genes: ', length(seuratO@var.genes)))
 rv <- as.matrix(seuratO@data[seuratO@var.genes,])
-print('ncol(rv):')
-ncol(rv)
+print('number variable genes:')
+print(ncol(rv))
 # rv <- rowVars(as.matrix(seuratO@data))
 # idx <- order(-rv)[1:1000]
 # prepare integer vector of values cut at number of Seurat clusters
@@ -81,7 +81,7 @@ seuratO <- StashIdent(seuratO, save.name = "WardCluster")
 
 # get numeric matrix of variable genes
 print('Writing pdf...')
-png("heatmapDendro_AllVarGenes.png", width = 20, height = 20, units = "in", res = 300)
+pdf("heatmapDendro_AllVarGenes.pdf", width = 30, height = 15, units = "in")
 heatmap.2(rv, 
           distfun = dist,
           hclustfun = hclust,
