@@ -15,7 +15,7 @@ library(dplyr)
 # library(tictoc)
 
 # Data --------------------------------------------------------------------
-load("../data/alignment_full/pbmc_seuratDatasetAlignment_fullDataset.Rda")
+load("../../SC3/data/alignment_full/pbmc_seuratDatasetAlignment_fullDataset.Rda")
 
 # We discard cells where the variance explained by CCA is <2-fold (ratio <
 # 0.5) compared to PCA
@@ -62,19 +62,19 @@ print('Completed integrated analysis and tSNE plot creation:')
 # toc()
 
 # Save Figures
-png("../data/alignment_full/seuratDatasetAlignment_Nowakowski_preCCA_tSNE.png", height = 10, width = 15, units = "in", res = 300)
+png("output/seuratDatasetAlignment_Nowakowski_preCCA_tSNE.png", height = 10, width = 15, units = "in", res = 300)
 preCCA
 dev.off()
 
-png("../data/alignment_full/seuratDatasetAlignment_Nowakowski_primaryCCA.png", height = 10, width = 15, units = "in", res = 300)
+png("output/seuratDatasetAlignment_Nowakowski_primaryCCA.png", height = 10, width = 15, units = "in", res = 300)
 primaryCCA
 dev.off()
 
-png("../data/alignment_full/seuratDatasetAlignment_Nowakowski_postCCA_tSNE_byGroup.png", height = 10, width = 15, units = "in", res = 300)
+png("output/seuratDatasetAlignment_Nowakowski_postCCA_tSNE_byGroup.png", height = 10, width = 15, units = "in", res = 300)
 postCCA
 dev.off()
 
-png("../data/alignment_full/seuratDatasetAlignment_Nowakowski_postCCA_tSNE_byDataSet.png", height = 10, width = 15, units = "in", res = 300)
+png("output/seuratDatasetAlignment_Nowakowski_postCCA_tSNE_byDataSet.png", height = 10, width = 15, units = "in", res = 300)
 postCCA_byDataSet
 dev.off()
 
