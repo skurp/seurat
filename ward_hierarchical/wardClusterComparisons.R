@@ -80,15 +80,15 @@ seuratO <- StashIdent(seuratO, save.name = "WardCluster")
 
 # get numeric matrix of variable genes
 print('Writing pdf...')
-pdf("heatmapDendro_AllVarGenes.pdf", width = 30, height = 15)
+png("heatmapDendro_AllVarGenes.png", width = 30, height = 15, units = 'in', res = 300)
 heatmap.2(rv, 
           distfun = dist,
           hclustfun = hclust,
-          dendrogram = c('both'),
+          dendrogram = c('column'),
           Rowv = FALSE,
           Colv = Colv,
-          labCol=seurat@meta.data$SeuratCluster,
-          strCol=90,
+          labCol=seuratO@meta.data$SeuratCluster,
+          srtCol=90,
           trace="none", 
           ColSideColors=seuratO@meta.data$cols, 
           col=hmcol,
