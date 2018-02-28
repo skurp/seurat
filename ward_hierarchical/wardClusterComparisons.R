@@ -3,6 +3,7 @@
 # Hierarchical Ward Clustering
 
 # Must load modules:
+# cd /u/home/w/wconnell/dkohn/wconnell/geschwind/projects/seurat/ward_hierarchical
 #  module load gcc/4.9.3
 #  module load R/3.4.0
 ################################################################################
