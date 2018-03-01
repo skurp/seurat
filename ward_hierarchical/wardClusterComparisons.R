@@ -53,7 +53,7 @@ seurat@meta.data$SeuratCluster <- Map_Values(seuratO@meta.data$res.0.6, currentI
 # Heatmap dendrogram ------------------------------------------------------
 library(RColorBrewer)
 n.cluster <- length(unique(seuratO@meta.data$res.0.6))
-hmcol <- colorRampPalette(brewer.pal(n.cluster, "GnBu"))(20)
+hmcol <- colorRampPalette(brewer.pal(n.cluster, "GnBu"))(10)
 
 library(gplots)
 # colorize the cells based on their cluster designations
@@ -81,7 +81,7 @@ seuratO <- StashIdent(seuratO, save.name = "WardCluster")
 
 # get numeric matrix of variable genes
 print('Writing pdf...')
-png("heatmapDendro_AllVarGenes.png", width = 30, height = 15, units = 'in', res = 300)
+pdf("heatmapDendro_AllVarGenes.pdf", width = 30, height = 15 )
 heatmap.2(rv, 
           distfun = dist,
           hclustfun = hclust,
@@ -102,6 +102,7 @@ print("Finished display")
 
 
 # tSNE Color Ward ---------------------------------------------------------
+rownames(seuratO@meta.data) <- seuratO@cell.names
 plot2 <- TSNEPlot(seuratO, do.label = TRUE, group.by = "WardCluster", pt.size = 0.4, do.return = TRUE
                   , no.legend = TRUE)
 plot2 <- plot2 + ggtitle(paste0("tSNE plot, each point is a cell"
